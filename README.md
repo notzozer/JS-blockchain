@@ -38,3 +38,48 @@ previousHash: Hash of the previous block (used to link blocks).
 Hash: The current block's hash, calculated using calculateHash().
 
 calculateHash(): combines all block properties into a string and hashes it and ensures that any change in block data will result in a different hash
+
+``` Javascript 
+class Blockchain {
+    constructor() {
+        this.chain = [this.createGenesisBlock()];
+    }
+
+    createGenesisBlock() {
+        return new Block(0, "04/10/2025", "Genesis Block", "0");
+    }
+
+    getLatestBlock() {
+        return this.chain[this.chain.length - 1];
+    }
+
+    addBlock(newBlock) {
+        newBlock.previousHash = this.getLatestBlock().hash;
+        newBlock.hash = newBlock.calculateHash();
+        this.chain.push(newBlock);
+    }
+
+    isChainValid() {
+        for (let i = 1; i < this.chain.length; i++) {
+            const currentBlock = this.chain[i];
+            const previousBlock = this.chain[i - 1];
+
+            if (currentBlock.hash !== currentBlock.calculateHash()) {
+                return false;
+            }
+
+            if (currentBlock.previousHash !== previousBlock.hash) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+createGenesisBlock(): Creates the first block manually (no previous block) a question might come up is why not just initialize it in the constructer? Well then we lose the ability of resuable code and in the case of changing the genesisBlock timestamp or data later, you only need to update one method this avoids hardcoding values directly in the constructor, which can get messy another question is why not declare it outside of the constructor and the class well the issue with that every blockchain would share the same chain any changes done to one chain would effect every chain thats why use this syntax to point towards the one chain we editing that index points at that instance
+
+getLatestBlock(): self explanatory gets the latestBlock with a simple array like functions (this.chain[this.chain.length-1]
+
+addBlock(newBlock): Links the new block to the previous one and recalculates its hash. How the linking works is by in the block we store the previous hash in the new block making a chain the syntax that does this is newBlock.previousHash stores the hash of the last block in the chain and this.getLatestBlock().hash Retrieves that hash from the most recent block so basically previousHash is a property we set to each block in the constructor which we set through the addblock method which accepts blocks
+
+isChainValid(): Checks if the blockchain is intact by verifying each block's hash matches its caluclated hash and ensuring each block's previous hash matchs the actual hash of the previous block
