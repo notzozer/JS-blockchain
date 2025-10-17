@@ -27,3 +27,14 @@ class Block {
     }
 }
 ```
+index: position of the block in the chain.
+
+timestamp: when the block was created.
+
+data: Transaction or payload.
+
+previousHash: Hash of the previous block (used to link blocks).
+
+Hash: The current block's hash, calculated using calculateHash().
+
+calculateHash(): combines all block properties into a string and hashes it and ensures that any change in block data will result in a different hash
