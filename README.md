@@ -67,7 +67,9 @@ class Blockchain {
             if (currentBlock.hash !== currentBlock.calculateHash()) {
                 return false;
             }
-
+            if (previousBlock.hash !== previousBlock.calculateHash()) {
+                return false;
+            }
             if (currentBlock.previousHash !== previousBlock.hash) {
                 return false;
             }
@@ -82,4 +84,20 @@ getLatestBlock(): self explanatory gets the latestBlock with a simple array like
 
 addBlock(newBlock): Links the new block to the previous one and recalculates its hash. How the linking works is by in the block we store the previous hash in the new block making a chain the syntax that does this is newBlock.previousHash stores the hash of the last block in the chain and this.getLatestBlock().hash Retrieves that hash from the most recent block so basically previousHash is a property we set to each block in the constructor which we set through the addblock method which accepts blocks
 
-isChainValid(): Checks if the blockchain is intact by verifying each block's hash matches its caluclated hash and ensuring each block's previous hash matchs the actual hash of the previous block
+isChainValid(): Checks for three conditions to ensure the chain is valid which are 
+1- check if the current block hash is equal to its caluclated hash 
+2- checks for the previous hash is also equal to its calculated hash 
+3-lastly check for the link between the blocks
+
+``` Javascript 
+let ZaidCoin = new Blockchain();
+ZaidCoin.addBlock(new Block(1, "05/10/2025", {amount: 4}));
+ZaidCoin.addBlock(new Block(2, "06/10/2025", {amount: 10}));
+
+console.log("is Blockchain valid? "+ZaidCoin.isChainValid());
+
+ZaidCoin.chain[1].data={amount:100};
+ZaidCoin.chain[1].hash=ZaidCoin.chain[1].calculateHash();
+console.log("is Blockchain valid? "+ZaidCoin.isChainValid());
+//console.log(JSON.stringify(ZaidCoin, null, 4));
+```
