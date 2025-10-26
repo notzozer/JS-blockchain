@@ -20,6 +20,7 @@ class Block {
         this.data = data;
         this.previousHash = previousHash;
         this.hash = this.calculateHash();
+        this.nonce=0;
     }
 
     calculateHash() {
@@ -38,7 +39,14 @@ previousHash: Hash of the previous block (used to link blocks).
 Hash: The current block's hash, calculated using calculateHash().
 
 calculateHash(): combines all block properties into a string and hashes it and ensures that any change in block data will result in a different hash
-
+```Javascript
+mineBlock(difficulty){
+        while(this.hash.substring(0, difficulty)!=Array(difficulty+1).join("0")){
+            this.nonce++;
+            this.hash=this.calculateHash();
+        }
+```
+This method makes sure that each block is mined repeatedly recalculating its hash until it reaches certain difficulty target the higher the difficulty is the more time it takes to mine and find a valid hash and the nonce count how many tries of calculations of hashes it took to reach that requirement for example if the difficulty was 4 we add 1+ because its an array and fill it with zeros comparing it with the hash that also takes the first numbers up to the difficulty which is 4 in this case and it keep recalculating till we get the 0000 
 ``` Javascript 
 class Blockchain {
     constructor() {
