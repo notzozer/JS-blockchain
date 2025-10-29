@@ -105,7 +105,14 @@ ZaidCoin.addBlock(new Block(2, "06/10/2025", {amount: 10}));
 console.log("is Blockchain valid? "+ZaidCoin.isChainValid());
 
 ZaidCoin.chain[1].data={amount:100};
+
+console.log("Mining block 1 ....");
+
+console.log("Mining block 2 ....");
+
 ZaidCoin.chain[1].hash=ZaidCoin.chain[1].calculateHash();
+
 console.log("is Blockchain valid? "+ZaidCoin.isChainValid());
+
 //console.log(JSON.stringify(ZaidCoin, null, 4));
 ```
