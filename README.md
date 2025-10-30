@@ -46,6 +46,8 @@ mineBlock(difficulty){
             this.hash=this.calculateHash();
         }
 ```
+POW
+
 This method makes sure that each block is mined repeatedly recalculating its hash until it reaches certain difficulty target the higher the difficulty is the more time it takes to mine and find a valid hash and the nonce count how many tries of calculations of hashes it took to reach that requirement for example if the difficulty was 4 we add 1+ because its an array and fill it with zeros comparing it with the hash that also takes the first numbers up to the difficulty which is 4 in this case and it keep recalculating till we get the 0000 
 ``` Javascript 
 class Blockchain {
