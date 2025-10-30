@@ -14,25 +14,21 @@ const SHA256 = require('crypto-js/sha256');
 this imports the![Status](https://img.shields.io/badge/SHA256-yellow)  hash function from the crypto-js library its used to generate a unique hash for each block based on its contents
 ``` java script 
 class Block {
-    constructor(index, timestamp, data, previousHash = '') {
-        this.index = index;
+    constructor(timestamp, transactions, previousHash = '') {
         this.timestamp = timestamp;
-        this.data = data;
+        this.transactions=transactions;
         this.previousHash = previousHash;
         this.hash = this.calculateHash();
         this.nonce=0;
     }
 
     calculateHash() {
-        return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
+        return SHA256( this.previousHash + this.timestamp + JSON.stringify(this.transactions)).toString();
     }
 }
 ```
-index: position of the block in the chain.
 
 timestamp: when the block was created.
-
-data: Transaction or payload.
 
 previousHash: Hash of the previous block (used to link blocks).
 
