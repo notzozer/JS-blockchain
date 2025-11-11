@@ -44,6 +44,8 @@ mineBlock(difficulty){
         while(this.hash.substring(0, difficulty)!=Array(difficulty+1).join("0")){
             this.nonce++;
             this.hash=this.calculateHash();
+    }
+    console.log("Block minded: "+this.hash)
         }
 ```
 POW
@@ -53,6 +55,9 @@ This method makes sure that each block is mined repeatedly recalculating its has
 class Blockchain {
     constructor() {
         this.chain = [this.createGenesisBlock()];
+        this.difficulty=2;
+        this.pendingTransactions=[];
+        this.miningReward=100;
     }
 
     createGenesisBlock() {
@@ -63,11 +68,35 @@ class Blockchain {
         return this.chain[this.chain.length - 1];
     }
 
-    addBlock(newBlock) {
-        newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
-        this.chain.push(newBlock);
+   minePendingTransactions(miningRewardAddress){
+    let block= new block(Date.now()this.pendingTransactions);
+    block.mineBlock(this.difficulty);
+
+    console.log('Block successfully mined!');
+    this.chain.push(block)
+
+    this.pendingTransactions=[
+    new Transaction(null, miningRewardAddress, this.miningReward)
+];
+  }
+
+createTransaction(transaction){
+this.pendingTransactions.push(transaction);
+}
+
+getBalanceofAddress(address){
+
+let balance=0;
+for(const block of this.chain){
+    for(const trans of block.transactions){
+        if(trans.fromAddress==address)
+            balance-=trans.amount
+        if(trans.toAddress=address)
+            balance+=trans.amount
     }
+ }
+return balance;
+}
 
     isChainValid() {
         for (let i = 1; i < this.chain.length; i++) {
@@ -101,20 +130,16 @@ isChainValid(): Checks for three conditions to ensure the chain is valid which a
 
 ``` Javascript 
 let ZaidCoin = new Blockchain();
-ZaidCoin.addBlock(new Block(1, "05/10/2025", {amount: 4}));
-ZaidCoin.addBlock(new Block(2, "06/10/2025", {amount: 10}));
+ZaidCoin.createTransaction(new Transaction('address1','address2',100));
+ZaidCoin.createTransaction(new Transaction('address2','address1',50));
 
-console.log("is Blockchain valid? "+ZaidCoin.isChainValid());
+console.log('\n Sarting the miner...');
+ZaidCoin.minePendingTransactions('zaid-address');
 
-ZaidCoin.chain[1].data={amount:100};
+console.log('\n balance of zaid is: ',ZaidCoin.getBalanceOfAddress('zaid-address'))
 
-console.log("Mining block 1 ....");
+console.log('\n Sarting the miner again...');
+ZaidCoin.minePendingTransactions('zaid-address');
 
-console.log("Mining block 2 ....");
-
-ZaidCoin.chain[1].hash=ZaidCoin.chain[1].calculateHash();
-
-console.log("is Blockchain valid? "+ZaidCoin.isChainValid());
-
-//console.log(JSON.stringify(ZaidCoin, null, 4));
+console.log('\n balance of zaid is: ',ZaidCoin.getBalanceOfAddress('zaid-address'))
 ```
