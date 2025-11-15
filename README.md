@@ -133,6 +133,39 @@ isChainValid(): Checks for three conditions to ensure the chain is valid which a
 2- checks for the previous hash is also equal to its calculated hash 
 3-lastly check for the link between the blocks
 
+''' Javascript
+
+class Transaction{
+    constructor(fromAddress,toAddress,amount){
+        this.fromAddress=fromAddress;
+        this.toAddress=toAddress;
+        this.amount=amount;
+    }
+    
+    calculateHash(){
+        return SHA256(this.fromAddress+this.toAddress+this.amount).toString();
+    }
+    
+    signTransaction(signKey){
+    if(signKey.getPublic('hex)!=this.fromAddress)
+    throw new Error('You cannot sign transactions for other wallets!');
+    const hashTx=this.calculteHash();
+    const sig=signingKey.sign(hashTx,'base64');
+    this.signature=sig.toDER('hex);
+    }
+    
+    isValid(){
+    if(this.fromAddess==null)
+        return true;
+    if(!this.signature||this.signature.length==0)
+        throw new Error('No signature in this transaction');
+    const publickey=ec.keyFromPublic(this.fromAddress,'hex');
+    return publickey.verify(this.calculateHash(),this.signature);
+    }
+}
+    
+'''
+
 ``` Javascript 
 let ZaidCoin = new Blockchain();
 ZaidCoin.createTransaction(new Transaction('address1','address2',100));
