@@ -133,7 +133,7 @@ isChainValid(): Checks for three conditions to ensure the chain is valid which a
 2- checks for the previous hash is also equal to its calculated hash 
 3-lastly check for the link between the blocks
 
-''' Javascript
+```Javascript
 
 class Transaction{
     constructor(fromAddress,toAddress,amount){
@@ -164,7 +164,7 @@ class Transaction{
     }
 }
     
-'''
+```
 
 ``` Javascript 
 let ZaidCoin = new Blockchain();
