@@ -19,8 +19,8 @@ class Block {
         this.timestamp = timestamp;
         this.data = data;
         this.previousHash = previousHash;
-        this.hash = this.calculateHash();
         this.nonce=0;
+        this.hash = this.calculateHash();
     }
 
     calculateHash() {
@@ -37,6 +37,7 @@ data: Transaction or payload.
 previousHash: Hash of the previous block (used to link blocks).
 
 Hash: The current block's hash, calculated using calculateHash().
+note that when calculating the hash in the constructor it needs after setting all the properties because eit uses the properties in the calculations such as nonce
 
 calculateHash(): combines all block properties into a string and hashes it and ensures that any change in block data will result in a different hash
 ```Javascript
@@ -119,7 +120,9 @@ return balance;
 ```
 createGenesisBlock(): Creates the first block manually (no previous block) a question might come up is why not just initialize it in the constructer? Well then we lose the ability of resuable code and in the case of changing the genesisBlock timestamp or data later, you only need to update one method this avoids hardcoding values directly in the constructor, which can get messy another question is why not declare it outside of the constructor and the class well the issue with that every blockchain would share the same chain any changes done to one chain would effect every chain thats why use this syntax to point towards the one chain we editing that index points at that instance
 
+this part of managing transactions 
 minePendingTransactions(miningRewardAddress) is responsible for creating a new block with the current timestampt and all pending transactions this.pendingTransactions is an array of Transaction objects waiting to be mined, initiates mining process using the blockchain's difficulty then prompts a message once the block is mined then add a block with the push method at the end of the array aka the block then resets the pending transactions to include a reward transaction, null refers to the sender indicates that this is a system-generated reward, miningReward is the receiver of the reward aka the miner,  this.miningReward is the amount of rewarded for mining
+
 
 getLatestBlock(): self explanatory gets the latestBlock with a simple array like functions (this.chain[this.chain.length-1]
 
