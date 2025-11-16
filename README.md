@@ -103,14 +103,24 @@ return balance;
         for (let i = 1; i < this.chain.length; i++) {
             const currentBlock = this.chain[i];
             const previousBlock = this.chain[i - 1];
-
-            if (currentBlock.hash !== currentBlock.calculateHash()) {
+            
+            console.log('\n--- Checking Block ${i}---');
+            console.log('Current block tranasactions', currentBlock.transactions);
+            console.log('Has valid transactions?',currentBlock.hasValidTransactions());
+            if(!currentBlock.hasValidTransactions(){
+                console.log('Failed: Invalid transactions');
                 return false;
             }
-            if (previousBlock.hash !== previousBlock.calculateHash()) {
+            if (currentBlock.hash !== currentBlock.calculateHash(){
+                console.log('FAILED: Hash mismatch');
                 return false;
             }
-            if (currentBlock.previousHash !== previousBlock.hash) {
+            if (previousBlock.hash !== previousBlock.calculateHash(){
+                console.log('FAILED: Previous block hash mismatch');
+                return false;
+            }
+            if (currentBlock.previousHash !== previousBlock.hash){
+                console.log('FAILED: Chain link broken');
                 return false;
             }
         }
@@ -164,6 +174,21 @@ class Transaction{
     }
 }
     
+```
+
+```Javascript
+const Ec=require('elliptic).ec;
+const ec=new EC('secp256k1');
+
+const key=ec.genKeyPair();
+const publickey=key.getPublic('hex');
+const privatekey=key.getPrivate('hex');
+
+console.log();
+console.log('Private key: ',privatekey);
+
+console.log();
+console.log('Public key: ',publickey);
 ```
 
 ``` Javascript 
