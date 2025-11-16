@@ -142,7 +142,7 @@ isChainValid(): Checks for three conditions to ensure the chain is valid which a
 1- check if the current block hash is equal to its caluclated hash 
 2- checks for the previous hash is also equal to its calculated hash 
 3-lastly check for the link between the blocks
-
+4-checks if the transactions are valid through the method 
 ```Javascript
 
 class Transaction{
